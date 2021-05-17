@@ -1,0 +1,43 @@
+<?php
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$listBlock = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+$categorysFactory = $objectManager->get('\Magento\Catalog\Model\CategoryFactory');
+$categoryId = 7; // YOUR CATEGORY ID
+$category = $categorysFactory->create()->load($categoryId);
+$categoryProducts = $category->getProductCollection()
+    ->addAttributeToSelect('*');
+?>
+
+<div class="donation product">
+    <div>
+        <img src='<?php echo $this->getViewFileUrl('Rlab_Donation::images/donations.jpg'); ?>' alt="image-icon"
+             width="400" height="350">
+    </div>
+    <div class="value">
+        <?php foreach ($categoryProducts as $product): ?>
+
+        <div class="item">
+            <?php $addToCartUrl = $listBlock->getAddToCartUrl($product); ?>
+        </div>
+        <br>
+        <div class="action">
+            <form data-role="tocart-form" action="<?php echo $addToCartUrl; ?>" method="post">
+                <?php echo $block->getBlockHtml('formkey') ?>
+
+               <b><?php echo $product->getName(); ?></b>
+
+                <label class="block"> <input type="radio" name="qty" value="1000"/>1000</label>
+                <label class="block"> <input type="radio" name="qty" value="500"/>500</label>
+                <label class="block"> <input type="radio" name="qty" value="100"/>100</label>
+
+                <button type="submit" title="Add Donation" class="action tocart primary">
+                    <span>Add Donation</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+
+

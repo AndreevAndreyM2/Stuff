@@ -1,0 +1,60 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+/** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $productCollection */
+$abstractProductBlock = $block->getLayout()->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+$productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
+$helperImport = $objectManager->get('\Magento\Catalog\Helper\Image');
+$collection = $productCollection->addAttributeToSelect('*')
+    ->load();
+$objectManager =\Magento\Framework\App\ObjectManager::getInstance();
+$helperImport = $objectManager->get('\Magento\Catalog\Helper\Image');
+$listBlock = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+
+?>
+<div class="carousel-wrap">
+    <div class="owl-carousel">
+        <?php foreach ($collection as $product): ?>
+            <div class="item">
+                <?php
+                $addToCartUrl = $listBlock->getAddToCartUrl($product);
+                $imageUrl = $helperImport->init($product, 'product_page_image_small')
+                    ->setImageFile($product->getSmallImage())
+                    ->resize(380)
+                    ->getUrl();
+                ?>
+                <h3 class="product">
+                    <a href="<?php echo $product->getProductUrl(); ?>"><?php echo $product->getName(); ?>
+                        <img src="<?php echo $imageUrl; ?>" width="100" height="150">
+                    </a>
+                </h3>
+                <div class="price">
+                    <span class="current-price"><?php echo $abstractProductBlock->getProductPrice($product) ?></span>
+                </div>
+
+                <div class="action">
+                    <form data-role="tocart-form" action="<?php echo $addToCartUrl; ?>" method="post">
+
+                        <?php echo $block->getBlockHtml('formkey') ?>
+                        <input type="radio"
+                               name="qty"
+                               id="qty"
+                               maxlength="12"
+                               value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+                               title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty form-control"
+                               data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                        />
+
+                        <button type="submit" title="Add to Cart" class="action tocart primary">
+
+                            <span>Add to Cart</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+</div>
+
+

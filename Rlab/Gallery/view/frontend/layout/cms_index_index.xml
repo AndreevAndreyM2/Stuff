@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Rlab_Gallery::js/common.js" async="async" />
+    </head>
+
+    <body>
+        <referenceContainer name="content">
+            <block class="Rlab\Gallery\Block\Gallery" template="Rlab_Gallery::/gallery.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

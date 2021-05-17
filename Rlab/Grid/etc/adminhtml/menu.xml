@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Rlab_Grid::view" title="Events" module="Rlab_Grid" sortOrder="50" resource="Rlab_Grid::view"/>
+        <add id="Rlab_Grid::menu" title="Manage Grid" module="Rlab_Grid" sortOrder="20" parent="Rlab_Grid::view" action="uievent/index/index" resource="Rlab_Grid::menu"/>
+    </menu>
+</config>
